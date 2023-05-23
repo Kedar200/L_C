@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Laptop controller</string>
+    <string name="ip">eneter your targeted ip</string>
+    <string name="compose_shortcut_short_label1">Short text</string>
+    <string name="compose_shortcut_long_label1">Long text</string>
+    <string name="compose_disabled_message1">Disabled</string>
+</resources>
