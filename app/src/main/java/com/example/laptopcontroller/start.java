@@ -16,7 +16,7 @@ public class start extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private RecyclerViewAdapter recyclerViewAdapter;
-    private ArrayList<Devices> contactArrayList;
+    private ArrayList<Devices> devicesArrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +26,15 @@ public class start extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        contactArrayList = new ArrayList<>();
+        devicesArrayList = new ArrayList<>();
         dbhandler db = new dbhandler(this);
         List<Devices> deviceList = db.getAll();
 
         for(Devices devices: deviceList){
-            deviceList.add(devices);
+            devicesArrayList.add(devices);
         }
 
-        recyclerViewAdapter = new RecyclerViewAdapter(start.this, contactArrayList);
+        recyclerViewAdapter = new RecyclerViewAdapter(start.this, devicesArrayList);
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 }

@@ -61,7 +61,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             contactName = itemView.findViewById(R.id.nickname);
             phoneNumber = itemView.findViewById(R.id.address);
 
-            iconButton.setOnClickListener(this);
         }
 
         @Override
