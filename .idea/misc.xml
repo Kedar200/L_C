@@ -7,9 +7,15 @@
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/custom_seekbar.xml" value="0.152" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ellipse_1.xml" value="0.1675" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ellipse_2.xml" value="0.1675" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ic_group_5.xml" value="0.149" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ic_group_6.xml" value="0.1785" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ic_group_8.xml" value="0.1215" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1675" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ic_launcher_forground.xml" value="0.1785" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ic_launcher_monochrome.xml" value="0.1205" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/ic_rectangle_13.xml" value="0.1785" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/icon.xml" value="0.1215" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/row_background.xml" value="0.1205" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/switch_off.xml" value="0.1675" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/switch_on.xml" value="0.1675" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/switch_thumb.xml" value="0.1675" />
@@ -19,8 +25,9 @@
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/drawable/volume_control_bg.xml" value="0.1675" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/layout/activity_add_aconnection.xml" value="0.375" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/layout/activity_main.xml" value="0.4" />
-        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/layout/activity_start.xml" value="0.165625" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/layout/activity_start.xml" value="0.264" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/layout/add_a_connection.xml" value="0.375" />
+        <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/layout/circleseek.xml" value="0.4" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/layout/dashboard.xml" value="0.4" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/layout/row.xml" value="0.375" />
         <entry key="..\:/Users/dell/AndroidStudioProjects/Laptopcontroller/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1215" />
