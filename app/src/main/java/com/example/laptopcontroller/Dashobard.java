@@ -41,6 +41,8 @@ public class Dashobard extends AppCompatActivity {
     String SERVER_IP;
     int SERVER_PORT;
     boolean CONNECTED=false;
+    private Socket socket;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
@@ -85,10 +87,7 @@ public class Dashobard extends AppCompatActivity {
                     }
                     else{
                         s.setEnabled(false);
-                        Thread connect = new Thread(new connect());
-                        connect.start();
-
-                        Thread sendmsg=new Thread(new sendmsg("Hi","shutdown"));
+                        Thread sendmsg=new Thread(new sendmsg("Text","Shutdown\r"));
                         sendmsg.start();
                         state.setText("Stopped");
                         state.setTextColor(getResources().getColor(R.color.red));
@@ -113,16 +112,14 @@ public class Dashobard extends AppCompatActivity {
 
     class connect implements Runnable {
         public void run() {
-            Socket socket;
+
             try {
                 socket = new Socket(SERVER_IP, SERVER_PORT);
                 CONNECTED=true;
                 output = new PrintWriter(socket.getOutputStream());
                 input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                Thread sendmsg=new Thread(new sendmsg("Text","You Are Connected to"+socket.getLocalAddress() ));
-                sendmsg.start();
-
+                output.write("hello");
+                socket.setTcpNoDelay(true);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -141,9 +138,13 @@ public class Dashobard extends AppCompatActivity {
             JSONObject object=new JSONObject();
 
             try {
+                socket = new Socket(SERVER_IP, SERVER_PORT);
+                output = new PrintWriter(socket.getOutputStream());
+                input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
                 object.put("type",type);
                 object.put("data",data);
-                output.write(object.toString());
+                output.write(object.toString()+"\n\r");
                 output.close();
             }
             catch (Exception e){
@@ -153,4 +154,13 @@ public class Dashobard extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

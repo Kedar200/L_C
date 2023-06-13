@@ -67,7 +67,6 @@
                 android:textColor="@color/green"
                 android:textSize="14sp"
                 android:textStyle="bold">
-
             </TextView>
         </LinearLayout>
 
@@ -78,7 +77,6 @@
             android:layout_marginRight="24sp"
             android:background="@drawable/toogle_bg"
             android:padding="10sp"
-
             android:thumb="@drawable/switch_thumb"
             android:track="@drawable/switch_track"
             app:layout_constraintEnd_toEndOf="parent"
