@@ -25,7 +25,7 @@ public class Add_a_connection extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 db.addDevice(new Devices(name.getEditText().getText().toString(),addr.getEditText().getText().toString()));
-
+                Add_a_connection.super.onBackPressed();
             }
         });
 

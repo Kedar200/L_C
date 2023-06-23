@@ -1,77 +1,99 @@
 package com.example.laptopcontroller;
 
 import android.content.Intent;
-import android.content.pm.ShortcutInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.PersistableBundle;
-import android.os.SystemClock;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.pm.ShortcutInfoCompat;
-import androidx.core.content.pm.ShortcutManagerCompat;
-import androidx.core.graphics.drawable.IconCompat;
 import androidx.core.splashscreen.SplashScreen;
 
+import com.example.laptopcontroller.Network.Connect;
 import com.example.laptopcontroller.data.dbhandler;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 
 public class Dashobard extends AppCompatActivity {
 
     String SERVER_IP;
     int SERVER_PORT;
-    boolean CONNECTED=false;
-    private Socket socket;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.dashboard);
         SERVER_IP=getIntent().getStringExtra("Ip");
         SERVER_PORT=1983;
 
-        Vibrator v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
-        v.vibrate(VibrationEffect.createOneShot(100,VibrationEffect.DEFAULT_AMPLITUDE));
-        Thread connect = new Thread(new connect());
+
+        Connect.ConnectListener listener=new Connect.ConnectListener() {
 
 
+            @Override
+            public void onConnected() {
+                Log.d("Hello","Connect");
+
+            }
+
+            @Override
+            public void onDisconnected() {
+                Log.d("Hello","Disconnected");
+
+            }
+
+            @Override
+            public void onMessageReceived(String message) {
+                Log.d("Hello",message);
+            }
+        };
+        Thread connect = new Thread(new Connect(SERVER_IP,SERVER_PORT,listener));
         connect.start();
-        SystemClock.sleep(1000);
 
-        if(CONNECTED){
-            Toast.makeText(this,"Yeah You Connected",Toast.LENGTH_SHORT).show();
 
-            setContentView(R.layout.dashboard);
             TextView state=findViewById(R.id.state);
             Switch s=findViewById(R.id.shutdown);
             Button delete=findViewById(R.id.delete_conn);
+            SeekBar test=findViewById(R.id.test1);
 
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dbhandler db = new dbhandler(v.getContext());
                     db.deleteById(getIntent().getIntExtra("Id",0));
+
+                }
+            });
+
+            test.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    JSONObject obj=new JSONObject();
+                    try {
+                        obj.put("function","Brightness");
+                        obj.put("value",seekBar.getProgress());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Thread sendmsg=new Thread(new Connect.Sendmsg("Command",obj));
+                    sendmsg.start();
 
                 }
             });
@@ -87,80 +109,25 @@ public class Dashobard extends AppCompatActivity {
                     }
                     else{
                         s.setEnabled(false);
-                        Thread sendmsg=new Thread(new sendmsg("Text","Shutdown\r"));
+                        JSONObject object=new JSONObject();
+                        try {
+                            object.put("function","lock");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Thread sendmsg=new Thread(new Connect.Sendmsg("Text",object));
                         sendmsg.start();
                         state.setText("Stopped");
                         state.setTextColor(getResources().getColor(R.color.red));
-
-
                     }
                 }
             });
 
 
-        }
-        else{
-            Toast.makeText(this,"Sad Life Check Your Network",Toast.LENGTH_SHORT).show();
-
-            onBackPressed();
-        }
 
 
     }
-    private PrintWriter output;
-    private BufferedReader input;
 
-    class connect implements Runnable {
-        public void run() {
 
-            try {
-                socket = new Socket(SERVER_IP, SERVER_PORT);
-                CONNECTED=true;
-                output = new PrintWriter(socket.getOutputStream());
-                input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                output.write("hello");
-                socket.setTcpNoDelay(true);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    class sendmsg implements Runnable {
-        private String type="Initial";
-        private String data="No data";
 
-        sendmsg(String type,String data) {
-            this.type = type;
-            this.data=data;
-        }
-        @Override
-        public void run() {
-            JSONObject object=new JSONObject();
-
-            try {
-                socket = new Socket(SERVER_IP, SERVER_PORT);
-                output = new PrintWriter(socket.getOutputStream());
-                input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                object.put("type",type);
-                object.put("data",data);
-                output.write(object.toString()+"\n\r");
-                output.close();
-            }
-            catch (Exception e){
-
-            }
-
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
