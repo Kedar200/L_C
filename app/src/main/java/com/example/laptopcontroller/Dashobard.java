@@ -1,6 +1,7 @@
 package com.example.laptopcontroller;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,7 +27,8 @@ public class Dashobard extends AppCompatActivity {
 
     String SERVER_IP;
     int SERVER_PORT;
-
+    TextView state;
+    SeekBar test;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,28 +43,26 @@ public class Dashobard extends AppCompatActivity {
             @Override
             public void onConnected() {
                 Log.d("Hello","Connect");
-
             }
 
             @Override
             public void onDisconnected() {
                 Log.d("Hello","Disconnected");
-
             }
 
             @Override
             public void onMessageReceived(String message) {
-                Log.d("Hello",message);
+                recived(message);
             }
         };
         Thread connect = new Thread(new Connect(SERVER_IP,SERVER_PORT,listener));
         connect.start();
 
 
-            TextView state=findViewById(R.id.state);
+            state=findViewById(R.id.state);
             Switch s=findViewById(R.id.shutdown);
             Button delete=findViewById(R.id.delete_conn);
-            SeekBar test=findViewById(R.id.test1);
+            test=findViewById(R.id.test1);
 
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,8 +117,7 @@ public class Dashobard extends AppCompatActivity {
                         }
                         Thread sendmsg=new Thread(new Connect.Sendmsg("Text",object));
                         sendmsg.start();
-                        state.setText("Stopped");
-                        state.setTextColor(getResources().getColor(R.color.red));
+
                     }
                 }
             });
@@ -126,6 +125,17 @@ public class Dashobard extends AppCompatActivity {
 
 
 
+    }
+
+    private void recived(String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(Dashobard.this, message, Toast.LENGTH_SHORT).show();
+                state.setText("Stopped");
+                state.setTextColor(Color.RED);
+            }
+        });
     }
 
 

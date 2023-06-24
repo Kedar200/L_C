@@ -32,9 +32,6 @@ public class Connect implements Runnable {
             Thread messageThread = new Thread(new MessageListener());
             messageThread.start();
 
-            // Start the heartbeat thread to check server availability
-//            Thread heartbeatThread = new Thread(new Heartbeat());
-//            heartbeatThread.start();
 
             while (!Thread.currentThread().isInterrupted()) {
             }
@@ -59,10 +56,10 @@ public class Connect implements Runnable {
         public void run() {
             try {
                 input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
                 String message;
-                while ((message = input.readLine()) != null) {
+                while (true) {
                     // Notify the listener about the received message
+                    message = input.readLine();
                     listener.onMessageReceived(message);
                 }
             } catch (IOException e) {
@@ -70,6 +67,7 @@ public class Connect implements Runnable {
                 listener.onDisconnected();
             } finally {
                 // Close the input stream and socket when done
+
                 try {
                     if (input != null)
                         input.close();
