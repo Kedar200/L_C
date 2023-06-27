@@ -33,28 +33,28 @@ public class start extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
-            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
-                    splashScreenView,
-                    View.TRANSLATION_Y,
-                    0f,
-                    -splashScreenView.getHeight()
-            );
-            slideUp.setInterpolator(new AnticipateInterpolator());
-            slideUp.setDuration(200L);
-
-            // Call SplashScreenView.remove at the end of your custom animation.
-            slideUp.addListener(new AnimatorListenerAdapter() {
-                @RequiresApi(api = Build.VERSION_CODES.S)
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    splashScreenView.remove();
-                }
-            });
-
-            // Run your animation.
-            slideUp.start();
-        });
+//        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+//            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+//                    splashScreenView,
+//                    View.TRANSLATION_Y,
+//                    0f,
+//                    -splashScreenView.getHeight()
+//            );
+//            slideUp.setInterpolator(new AnticipateInterpolator());
+//            slideUp.setDuration(200L);
+//
+//            // Call SplashScreenView.remove at the end of your custom animation.
+//            slideUp.addListener(new AnimatorListenerAdapter() {
+//                @RequiresApi(api = Build.VERSION_CODES.S)
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    splashScreenView.remove();
+//                }
+//            });
+//
+//            // Run your animation.
+//            slideUp.start();
+//        });
         setContentView(R.layout.activity_start);
 
         recyclerView = findViewById(R.id.recyclerView);

@@ -102,10 +102,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Vibrator v = (Vibrator) itemView.getContext().getSystemService(itemView.getContext().VIBRATOR_SERVICE);
                 v.vibrate(VibrationEffect.createOneShot(100,VibrationEffect.DEFAULT_AMPLITUDE));
 
-                Toast.makeText(itemView.getContext(), "Yeah You Connected",Toast.LENGTH_SHORT).show();
 
             }
             else {
+                context.startActivity(dashboard);
+
                 Toast.makeText(itemView.getContext(), "Offline hai nahi dikh raha kya",Toast.LENGTH_SHORT).show();
             }
         }

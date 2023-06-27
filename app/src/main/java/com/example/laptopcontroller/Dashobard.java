@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -29,6 +31,9 @@ public class Dashobard extends AppCompatActivity {
     int SERVER_PORT;
     TextView state;
     SeekBar test;
+    ProgressBar progressBar;
+    View overlay;
+    Switch s;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +47,29 @@ public class Dashobard extends AppCompatActivity {
 
             @Override
             public void onConnected() {
-                Log.d("Hello","Connect");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        overlay.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
             }
 
             @Override
             public void onDisconnected() {
-                Log.d("Hello","Disconnected");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        overlay.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
+                        test.setEnabled(false);
+                        s.setEnabled(false);
+
+                        Toast.makeText(Dashobard.this, "Server Disconnected",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -60,16 +82,17 @@ public class Dashobard extends AppCompatActivity {
 
 
             state=findViewById(R.id.state);
-            Switch s=findViewById(R.id.shutdown);
+            s=findViewById(R.id.shutdown);
             Button delete=findViewById(R.id.delete_conn);
             test=findViewById(R.id.test1);
-
+            progressBar=findViewById(R.id.progressBar);
+            overlay=findViewById(R.id.overlay);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dbhandler db = new dbhandler(v.getContext());
                     db.deleteById(getIntent().getIntExtra("Id",0));
-
+                    Dashobard.super.onBackPressed();
                 }
             });
 
@@ -117,7 +140,8 @@ public class Dashobard extends AppCompatActivity {
                         }
                         Thread sendmsg=new Thread(new Connect.Sendmsg("Text",object));
                         sendmsg.start();
-
+                        state.setText("Stopped");
+                        state.setTextColor(Color.RED);
                     }
                 }
             });
@@ -128,14 +152,24 @@ public class Dashobard extends AppCompatActivity {
     }
 
     private void recived(String message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(Dashobard.this, message, Toast.LENGTH_SHORT).show();
-                state.setText("Stopped");
-                state.setTextColor(Color.RED);
-            }
-        });
+
+        JSONObject object;
+        try {
+           object =new JSONObject(message);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        test.setProgress(object.getInt("Brightness"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
