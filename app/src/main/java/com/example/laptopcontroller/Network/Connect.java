@@ -16,6 +16,10 @@ public class Connect implements Runnable {
     private int SERVER_PORT;
     private ConnectListener listener;
 
+    public void setListener(ConnectListener listener) {
+        this.listener = listener;
+    }
+
     public Connect(String ip, int SERVER_PORT, ConnectListener listener) {
         this.ip = ip;
         this.SERVER_PORT = SERVER_PORT;

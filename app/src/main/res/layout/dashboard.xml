@@ -5,24 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
     <FrameLayout
-
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:elevation="1dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:elevation="2dp">
 
         <!-- Your other layout elements -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:layout_gravity="center"
+            />
 
         <View
             android:id="@+id/overlay"
@@ -33,95 +30,160 @@
 
     </FrameLayout>
 
-    <Button
-        android:id="@+id/delete_conn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete This Connection"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Button>
-
-
-    <SeekBar
-        android:id="@+id/test1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-    </SeekBar>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/delete_conn">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/delete_conn">
 
             <TextView
+                android:id="@+id/percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:elevation="20dp"
-
-                android:text="Device Name"
-                android:textColor="@color/black"
-
-                android:textSize="16sp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="50dp"
+                android:elevation="1dp"
+                android:text="0%"
+                android:textColor="@color/white"
+                android:textSize="35sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView">
+                app:layout_constraintStart_toStartOf="@+id/test1"
+                app:layout_constraintTop_toTopOf="@+id/test1">
 
             </TextView>
 
+
+            <com.example.laptopcontroller.Circleseek
+                android:id="@+id/test1"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
-                android:id="@+id/state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="Running"
-                android:textColor="@color/green"
-                android:textSize="14sp"
-                android:textStyle="bold"></TextView>
-        </LinearLayout>
+                android:layout_marginTop="30dp"
+                android:elevation="1dp"
+                android:text="Brightness"
+                android:textColor="#525252"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/test1"
+                app:layout_constraintEnd_toEndOf="@+id/test1"
+                app:layout_constraintStart_toStartOf="@+id/test1"
+                app:layout_constraintTop_toTopOf="@+id/test1">
 
-        <Switch
-            android:id="@+id/shutdown"
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Button
+            android:id="@+id/delete_conn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="24sp"
-            android:background="@drawable/toogle_bg"
-            android:padding="10sp"
-            android:thumb="@drawable/switch_thumb"
-            android:track="@drawable/switch_track"
+            android:text="Delete This Connection"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></Switch>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/delete_conn">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:elevation="20dp"
+
+                    android:text="Device Name"
+                    android:textColor="@color/black"
+
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="Running"
+                    android:textColor="@color/green"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/shutdown"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="24sp"
+                android:background="@drawable/toogle_bg"
+                android:paddingRight="20dp"
+                android:thumb="@drawable/switch_thumb"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/Scrrenshot"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            </ImageView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
